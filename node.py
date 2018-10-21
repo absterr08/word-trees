@@ -1,8 +1,5 @@
-from PyDictionary import PyDictionary
+from nltk.corpus import wordnet
 import queue
-import pdb
-
-THESAURUS = PyDictionary()
 
 class WordNode:
     def __init__(self, word):
@@ -18,7 +15,7 @@ class WordNode:
     def add_child(self, childNode):
         childNode.add_parent(self)
 
-    def build_move_tree(self, max_depth=20):
+    def build_word_tree(self, max_depth=20):
         q = queue.Queue()
         q.put(self)
         curr_depth = 0
@@ -27,15 +24,20 @@ class WordNode:
             curr_node = q.get()
             for child in curr_node.valid_children(self.seen_words):
                 curr_node.add_child(child)
-                self.seen_words.add(child.word) # put this logic somewhere else
+                self.seen_words.add(child.word)
                 q.put(child)
             curr_depth += 1
 
     def valid_children(self, seen_words):
         return filter(lambda node: node.word not in seen_words and len(node.word.split()) == 1, self.synonyms())
 
+
     def synonyms(self):
-        return map(lambda word: WordNode(word), THESAURUS.synonym(self.word))
+        syns = set()
+        for syn in wordnet.synsets(self.word):
+            for l in syn.lemmas():
+                syns.add(WordNode(l.name()))
+        return syns
 
     def search(self, target):
         q = queue.Queue()
@@ -54,7 +56,7 @@ class WordNode:
                 q.put(child)
         print("not found :(")
 
-    def trace_path_back(self, node):
+    def trace_words_back(self, node):
         path = []
         while node.parent:
             path.append(node.word)
@@ -65,5 +67,13 @@ class WordNode:
     @classmethod
     def find_path(cls, source, target):
         src = WordNode(source)
-        src.build_move_tree()
+        src.build_word_tree()
         src.search(target)
+
+
+
+src = input("Enter a word to start from: ")
+target = input("Enter a word you'd like to find a path to: ")
+print("searching synonyms...")
+print("\n\n\n")
+WordNode.find_path(src, target)
