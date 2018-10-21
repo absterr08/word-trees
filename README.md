@@ -20,4 +20,4 @@ def synonyms(self):
 #### nltk
 `pip install nltk`
 
-From the root directory, just run `python node.py`. You'll be prompted for a source and target word. Enter your words and see if they connect!
+From the root directory, just run `python word_connect.py`. You'll be prompted for a source and target word. Enter your words and see if they connect!
