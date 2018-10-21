@@ -1,6 +1,7 @@
 # Word Connect
-Ever wondered if you can get from a target word to a source word via a path of synonyms? Here's a really simple way to find out :) It's not browser-ready yet, but it's simple enough to set up and use the CLI locally.
+A CLI tool to find out if two words are connected via their synonyms. This is a fun and simple way to explore the relationship between two words :) 
 
+A tree of synonyms is built out from the source word. That tree is then traveresed using breadth-first-search to see if there's a path of synonyms to the target word.
 
 A word's synonyms are found using [wordnet](http://www.nltk.org/howto/wordnet.html)'s `synsets`
 
@@ -12,6 +13,8 @@ def synonyms(self):
             syns.add(WordNode(l.name()))
     return syns
 ```
+
+
 
 ## requirements
 #### python >= 3.6.0
