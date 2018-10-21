@@ -15,7 +15,7 @@ class WordNode:
     def add_child(self, childNode):
         childNode.add_parent(self)
 
-    def build_word_tree(self, max_depth=20):
+    def build_word_tree(self, max_depth=100):
         q = queue.Queue()
         q.put(self)
         curr_depth = 0
@@ -50,7 +50,7 @@ class WordNode:
             if curr_node.word == target:
                 print("found!")
                 print("here's the full path:")
-                print(self.trace_path_back(curr_node))
+                print(self.trace_words_back(curr_node))
                 return
             for child in curr_node.children:
                 q.put(child)
@@ -59,9 +59,9 @@ class WordNode:
     def trace_words_back(self, node):
         path = []
         while node.parent:
-            path.append(node.word)
+            path.insert(0, node.word)
             node = node.parent
-        path.append(self.word)
+        path.insert(0, self.word)
         return path
 
     @classmethod
@@ -71,9 +71,15 @@ class WordNode:
         src.search(target)
 
 
+def prompt():
+    src = input("Enter a word to start from: ")
+    target = input("Enter a word you'd like to find a path to: ")
+    print("searching synonyms...")
+    print("\n\n\n")
+    WordNode.find_path(src, target)
 
-src = input("Enter a word to start from: ")
-target = input("Enter a word you'd like to find a path to: ")
-print("searching synonyms...")
-print("\n\n\n")
-WordNode.find_path(src, target)
+go = True
+
+while go:
+    prompt()
+    go = True if input("Try another word? (y/n)") == "y" else False
