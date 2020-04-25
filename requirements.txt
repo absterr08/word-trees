@@ -3,3 +3,10 @@ joblib==0.14.1
 nltk==3.5
 regex==2020.4.4
 tqdm==4.45.0
+
+#flask#
+Flask==1.1.2
+itsdangerous==1.1.0
+Jinja2==2.11.2
+MarkupSafe==1.1.1
+Werkzeug==1.0.1
