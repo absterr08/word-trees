@@ -1,6 +1,7 @@
 import os
 
 from flask import Flask, jsonify
+from .word_tree import WordTree
 from . import synonyms
 
 
@@ -30,7 +31,6 @@ def create_app(test_config=None):
     def hello():
         return jsonify({"hello": "world"})
 
-    from . import synonyms
     app.register_blueprint(synonyms.bp)
 
 
