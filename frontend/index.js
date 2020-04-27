@@ -1,3 +1,6 @@
+import startApp from './tree/tree_app.js'
+
 document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('root').innerHTML = 'HEYO';
+    const root = document.getElementById('root');
+    startApp(root);
 });
