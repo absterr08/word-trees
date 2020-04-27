@@ -7,7 +7,7 @@ class WordTree:
         self.root = word_node
         self._build_word_tree()
 
-    def _build_word_tree(self, max_depth=100):
+    def _build_word_tree(self, max_depth=10):
         q = queue.Queue()
         q.put(self.root)
         curr_depth = 0

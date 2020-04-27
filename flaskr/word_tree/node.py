@@ -24,6 +24,7 @@ class WordNode:
 
     def to_dict(self):
         return {
-            'word': self.word,
+            'parent': self.parent.word if self.parent else '',
+            'name': self.word,
             'children': [child.to_dict() for child in self.children]
         }

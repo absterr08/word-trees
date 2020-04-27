@@ -1,9 +1,10 @@
 import os
 
-from flask import Flask, jsonify
+from flask import Flask, jsonify, render_template
 from .word_tree import WordTree
 from . import synonym_list
 from . import synonym_tree
+from . import root
 
 
 def create_app(test_config=None):
@@ -32,8 +33,8 @@ def create_app(test_config=None):
     def hello():
         return jsonify({"hello": "world"})
 
+    app.register_blueprint(root.bp)
     app.register_blueprint(synonym_list.bp)
     app.register_blueprint(synonym_tree.bp)
-
 
     return app
