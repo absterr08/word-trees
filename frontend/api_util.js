@@ -1,19 +1,23 @@
-
-function get(url, callback) {
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.onreadystatechange = function () {
-        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
-            callback(xmlHttp.response);
-    }
-    xmlHttp.open("GET", `api/${url}`, true);
-    xmlHttp.responseType = 'json';
-    xmlHttp.send();
+function get(url) {
+    return new Promise((res, rej) => {
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.onreadystatechange = function () {
+            if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+                res(xmlHttp.response);
+            } else if (xmlHttp.status > 302) {
+                return rej(xmlHttp.resonse);
+            }
+        }
+        xmlHttp.open("GET", `api/${url}`, true);
+        xmlHttp.responseType = 'json';
+        xmlHttp.send();
+    });
 }
 
-export const getSynonymList = (word, cb) => {
-    return get(`synonym_list?word=${word}`, cb);
+export const getSynonymList = (word) => {
+    return get(`synonym_list?word=${word}`);
 };
 
-export const getSynonymTree = (word, cb) => {
-    return get(`synonym_tree?word=${word}`, cb);
+export const getSynonymTree = (word) => {
+    return get(`synonym_tree?word=${word}`);
 };
