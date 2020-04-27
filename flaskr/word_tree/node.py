@@ -21,3 +21,9 @@ class WordNode:
             for l in syn.lemmas():
                 syns.add(WordNode(l.name()))
         return syns
+
+    def to_dict(self):
+        return {
+            'word': self.word,
+            'children': [child.to_dict() for child in self.children]
+        }

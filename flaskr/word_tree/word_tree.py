@@ -1,6 +1,7 @@
 import queue
 from . import WordNode
 
+
 class WordTree:
     def __init__(self, word_node):
         self.root = word_node
@@ -34,13 +35,7 @@ class WordTree:
                 q.put(child)
 
     def to_dict(self):
-        return {
-            'word': 'word1',
-            'children': [
-                {'word': 'word2'}
-            ]
-        }
-
+        return self.root.to_dict()
 
     @classmethod
     def find_path(cls, source, target):
