@@ -5,7 +5,7 @@ export default function (data) {
     const root = d3.hierarchy(data);
     const dx = 15;
     const dy = 159;
-    const margin = ({ top: 10, right: 120, bottom: 10, left: 40 });
+    const margin = ({ top: 10, right: 120, bottom: 10, left: 100 });
     const tree = d3.tree().nodeSize([dx, dy])
     const diagonal = d3.linkHorizontal().x(d => d.y).y(d => d.x)
     const width = 159 * 6;
