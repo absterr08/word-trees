@@ -5,7 +5,10 @@
     <meta charset="utf-8">
 
     <title>Word trees</title>
-    <link href="https://fonts.googleapis.com/css2?family=Manrope&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
+        integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+
+    <link href="https://fonts.googleapis.com/css?family=Abel" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <script src="{{ url_for('static', filename='bundle.js') }}"></script>
 
@@ -13,14 +16,77 @@
 </head>
 
 <body>
-    <div id='info'>
-        <p>See if there's a path from a source word to a target word through the source word's synonyms.</p>
-        <div id='input-container'>
-            <input id='source-input' type="text" placeholder="enter source word">
-            <input id='target-input' type="text" placeholder="enter target word">
+    <nav class='nav'>
+        <div class='header-container'>
+            <h1>Word Trees</h1>
+            <i id='question-button' class="fas fa-question-circle"></i>
         </div>
-        <button disabled id='path'>go</button>
+        <ul class='left-nav'>
+            <li><a target="_blank" href="http://www.abbyhersh.com"> abby hersh</i></a></li>
+            <li><a target="_blank" href="https://github.com/absterr08"><i class="fab fa-github"></i></a></li>
+        </ul>
+    </nav>
+    <div id='container'>
+        <h3>Visualize the tree-like relationship formed by a word and its synonyms.</h3>
 
+        <div class='flex-container'>
+            <div class='input-container'>
+                <label>root word</label>
+                <input id='source-input' type="text">
+            </div>
+            <div class='input-container'>
+                <label>target word (optional)</label>
+                <input id='target-input' type="text">
+            </div>
+        </div>
+        <div class='flex-container'>
+            <button class='button' disabled id='synonyms'>view synonyms</button>
+            <button class='button' disabled id='path'>find path</button>
+        </div>
     </div>
-    <div id="svg-container"></div>
+    <div id='svg-container'>
+        <div id="svg"></div>
+    </div>
+    <div id='info-modal' class='modal-background'>
+        <div id='info-container'>
+            <p>
+                This project was built to explore the relationship between similar words.
+                <br><br>
+                You can start by entering just a root word to view its tree of synonyms.
+                If you enter both a root and a target word, you can see if there's a path from the root to the target through
+                the root's synonyms.
+                <br><br>
+                Take "fun" and "gaiety" for example. A path from "fun" to "gaiety" exists because "merriment" is a synonym of "fun", and "gaiety" is a synonym of "merriment".
+                <br>
+                <br>
+                The tree is built out by finding all of the synonyms of a word, and all of the synonyms of those synonyms.
+                If a target word is entered, the tree is searched (breadth first) to see if it exists.
+                <br>
+                <br>
+                This project uses Python's <a href="https://www.nltk.org/">NLTK (Natural Language Toolkit)</a> library for
+                <a href="https://wordnet.princeton.edu/">Wordnet</a>.
+                Wordnet is a large, lexical database of English words that groups nouns, verbs, adjectives, and adverbs into
+                sets of synonyms called "synsets".
+                <br>
+                <br>
+                You can check out the code for this project <a href="https://github.com/absterr08/word-trees">here</a>.
+                <br>
+                <br>
+                <br>
+            </p>
+            <button id="example" class="button">Enjoy!</button>
+        </div>
+    </div>
+    <!-- <footer id="contact">
+        <ul>
+            <li><a target="_blank" href="http://www.abbyhersh.com"><i class="fas fa-globe"></i></a></li>
+            <li><a target="_blank" href="https://github.com/absterr08"><i class="fab fa-github"></i></a></li>
+            <li><a target="_blank" href="https://www.linkedin.com/in/abigail-hersh/"><i class="fab fa-linkedin"></i></a>
+            </li>
+            <li><a target="_blank" href="mailto:abbychersh@gmail.com"><i class="far fa-envelope"></i></a></li>
+            <li><a target="_blank" href="https://twitter.com/absterr08"><i class="fab fa-twitter"></i></i></a></li>
+        </ul>
+        <span>Copyright © Abby Hersh 2020</span>
+    </footer> -->
 </body>
+</html>

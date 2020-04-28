@@ -19,16 +19,13 @@ export default function (data) {
 
     });
 
-    const svg = d3.select("body").append("svg")
+    const svg = d3.select("#svg").append("svg")
         .attr("viewBox", [-margin.left, -margin.top, width, dx])
         .style("font", "10px sans-serif")
         .style("user-select", "none");
 
     const gLink = svg.append("g")
-        .attr("fill", "none")
-        .attr("stroke", "#555")
-        .attr("stroke-opacity", 0.4)
-        .attr("stroke-width", 1.5);
+        .attr("class", "path")
 
     const gNode = svg.append("g")
         .attr("cursor", "pointer")
@@ -71,10 +68,7 @@ export default function (data) {
             });
 
         nodeEnter.append("circle")
-            .attr("r", d => d._children ? 3 : 2.5)
-            .attr("fill", "#999")
-            .attr("stroke", d => d._children ? "black" : '')
-            .attr("stroke-width", d => d._children ? 1.5 : 10);
+            .attr("class", d => d._children ? "with-children": "")
 
         nodeEnter.append("text")
             .attr("dy", "0.31em")
@@ -128,9 +122,7 @@ export default function (data) {
 
         gLink.selectAll("path")
             .filter(node => node.source.data.on_path && node.target.data.on_path)
-            .attr("stroke", "#70fff8")
-            .attr("stroke-opacity", 1)
-            .attr("stroke-width", 2.5);
+            .attr("class", "on-path")
     }
 
     update(root);
