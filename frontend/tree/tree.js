@@ -15,7 +15,8 @@ export default function (data) {
     root.descendants().forEach((d, i) => {
         d.id = i;
         d._children = d.children;
-        if (d.depth && d.data.name.length !== 7) d.children = null;
+        if (d.depth && d.children && !d.children.some(child => child.data.on_path)) d.children = null;
+
     });
 
     const svg = d3.select("body").append("svg")
@@ -70,9 +71,10 @@ export default function (data) {
             });
 
         nodeEnter.append("circle")
-            .attr("r", 2.5)
-            .attr("fill", d => d._children ? "#555" : "#999")
-            .attr("stroke-width", 10);
+            .attr("r", d => d._children ? 3 : 2.5)
+            .attr("fill", "#999")
+            .attr("stroke", d => d._children ? "black" : '')
+            .attr("stroke-width", d => d._children ? 1.5 : 10);
 
         nodeEnter.append("text")
             .attr("dy", "0.31em")
