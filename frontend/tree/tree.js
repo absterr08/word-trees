@@ -126,7 +126,9 @@ export default function (data) {
 
         gLink.selectAll("path")
             .filter(node => node.source.data.on_path && node.target.data.on_path)
-            .attr("stroke", "blue");
+            .attr("stroke", "#70fff8")
+            .attr("stroke-opacity", 1)
+            .attr("stroke-width", 2.5);
     }
 
     update(root);
