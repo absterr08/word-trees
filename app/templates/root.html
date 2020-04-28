@@ -5,16 +5,22 @@
     <meta charset="utf-8">
 
     <title>Word trees</title>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
     <script src="{{ url_for('static', filename='bundle.js') }}"></script>
 
 
 </head>
 
 <body>
-    <div id='input-container'>
-        <input id='word-input' type="text" placeholder="enter word">
-        <button id='tree'>view synonym tree</button>
+    <div id='info'>
+        <p>See if there's a path from a source word to a target word through the source word's synonyms.</p>
+        <div id='input-container'>
+            <input id='source-input' type="text" placeholder="enter source word">
+            <input id='target-input' type="text" placeholder="enter target word">
+        </div>
+        <button disabled id='path'>go</button>
+
     </div>
+    <div id="svg-container"></div>
 </body>

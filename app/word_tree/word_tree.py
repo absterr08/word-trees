@@ -30,6 +30,7 @@ class WordTree:
         while not q.empty():
             curr_node = q.get()
             if curr_node.word == target:
+                curr_node.set_found()
                 return
             for child in curr_node.children:
                 q.put(child)
@@ -40,8 +41,9 @@ class WordTree:
     @classmethod
     def find_path(cls, source, target):
         root = WordNode(source)
-        src = WordTree(root)
-        src.search(target)
+        tree = WordTree(root)
+        tree.search(target)
+        return tree.to_dict()
 
     @classmethod
     def build_tree(cls, word):

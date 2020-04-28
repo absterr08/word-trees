@@ -1,300 +1,135 @@
-// data = {
-//     var levels = [
-//       [{id: 'Chaos'}],
-//       [
-//         {id: 'Gaea', parents: ['Chaos']},
-//         {id: 'Uranus'}
-//       ],
-//       [
-//         {id: 'Oceanus', parents: ['Gaea', 'Uranus']},
-//         {id: 'Thethys', parents: ['Gaea', 'Uranus']},
-//         {id: 'Pontus'},
-//         {id: 'Rhea', parents: ['Gaea', 'Uranus']},
-//         {id: 'Cronus', parents: ['Gaea', 'Uranus']},
-//         {id: 'Coeus', parents: ['Gaea', 'Uranus']},
-//         {id: 'Phoebe', parents: ['Gaea', 'Uranus']},
-//         {id: 'Crius', parents: ['Gaea', 'Uranus']},
-//         {id: 'Hyperion', parents: ['Gaea', 'Uranus']},
-//         {id: 'Iapetus', parents: ['Gaea', 'Uranus']},
-//         {id: 'Thea', parents: ['Gaea', 'Uranus']},
-//         {id: 'Themis', parents: ['Gaea', 'Uranus']},
-//         {id: 'Mnemosyne', parents: ['Gaea', 'Uranus']}
-//       ],
-//       [
-//         {id: 'Doris', parents: ['Oceanus', 'Thethys']},
-//         {id: 'Neures', parents: ['Pontus', 'Gaea']},
-//         {id: 'Dionne'},
-//         {id: 'Demeter', parents: ['Rhea', 'Cronus']},
-//         {id: 'Hades', parents: ['Rhea', 'Cronus']},
-//         {id: 'Hera', parents: ['Rhea', 'Cronus']},
-//         {id: 'Alcmene'},
-//         {id: 'Zeus', parents: ['Rhea', 'Cronus']},
-//         {id: 'Eris'},
-//         {id: 'Leto', parents: ['Coeus', 'Phoebe']},
-//         {id: 'Amphitrite'},
-//         {id: 'Medusa'},
-//         {id: 'Poseidon', parents: ['Rhea', 'Cronus']},
-//         {id: 'Hestia', parents: ['Rhea', 'Cronus']}
-//       ],
-//       [
-//         {id: 'Thetis', parents: ['Doris', 'Neures']},
-//         {id: 'Peleus'},
-//         {id: 'Anchises'},
-//         {id: 'Adonis'},
-//         {id: 'Aphrodite', parents: ['Zeus', 'Dionne']},
-//         {id: 'Persephone', parents: ['Zeus', 'Demeter']},
-//         {id: 'Ares', parents: ['Zeus', 'Hera']},
-//         {id: 'Hephaestus', parents: ['Zeus', 'Hera']},
-//         {id: 'Hebe', parents: ['Zeus', 'Hera']},
-//         {id: 'Hercules', parents: ['Zeus', 'Alcmene']},
-//         {id: 'Megara'},
-//         {id: 'Deianira'},
-//         {id: 'Eileithya', parents: ['Zeus', 'Hera']},
-//         {id: 'Ate', parents: ['Zeus', 'Eris']},
-//         {id: 'Leda'},
-//         {id: 'Athena', parents: ['Zeus']},
-//         {id: 'Apollo', parents: ['Zeus', 'Leto']},
-//         {id: 'Artemis', parents: ['Zeus', 'Leto']},
-//         {id: 'Triton', parents: ['Poseidon', 'Amphitrite']},
-//         {id: 'Pegasus', parents: ['Poseidon', 'Medusa']},
-//         {id: 'Orion', parents: ['Poseidon']},
-//         {id: 'Polyphemus', parents: ['Poseidon']}
-//       ],
-//       [
-//         {id: 'Deidamia'},
-//         {id: 'Achilles', parents: ['Peleus', 'Thetis']},
-//         {id: 'Creusa'},
-//         {id: 'Aeneas', parents: ['Anchises', 'Aphrodite']},
-//         {id: 'Lavinia'},
-//         {id: 'Eros', parents: ['Hephaestus', 'Aphrodite']},
-//         {id: 'Helen', parents: ['Leda', 'Zeus']},
-//         {id: 'Menelaus'},
-//         {id: 'Polydueces', parents: ['Leda', 'Zeus']}
-//       ],
-//       [
-//         {id: 'Andromache'},
-//         {id: 'Neoptolemus', parents: ['Deidamia', 'Achilles']},
-//         {id: 'Aeneas(2)', parents: ['Creusa', 'Aeneas']},
-//         {id: 'Pompilius', parents: ['Creusa', 'Aeneas']},
-//         {id: 'Iulus', parents: ['Lavinia', 'Aeneas']},
-//         {id: 'Hermione', parents: ['Helen', 'Menelaus']}
-//       ]
-//     ]
-    
-//     // precompute level depth
-//     levels.forEach((l,i) => l.forEach(n => n.level = i))
-    
-//     var nodes = levels.reduce( ((a,x) => a.concat(x)), [] )
-//     var nodes_index = {}
-//     nodes.forEach(d => nodes_index[d.id] = d)
-    
-//     // objectification
-//     nodes.forEach(d => {
-//       d.parents = (d.parents === undefined ? [] : d.parents).map(p => nodes_index[p])
-//     })
-    
-//     // precompute bundles
-//     levels.forEach((l, i) => {
-//       var index = {}
-//       l.forEach(n => {
-//         if(n.parents.length == 0) {
-//           return
-//         }
-        
-//         var id = n.parents.map(d => d.id).sort().join('--')
-//         if (id in index) {
-//           index[id].parents = index[id].parents.concat(n.parents)
-//         }
-//         else {
-//           index[id] = {id: id, parents: n.parents.slice(), level: i}
-//         }
-//         n.bundle = index[id]
-//       })
-//       l.bundles = Object.keys(index).map(k => index[k])
-//       l.bundles.forEach((b, i) => b.i = i)
-//     })
-    
-//     var links = []
-//     nodes.forEach(d => {
-//       d.parents.forEach(p => links.push({source: d, bundle: d.bundle, target: p}))
-//     })
-    
-//     var bundles = levels.reduce( ((a,x) => a.concat(x.bundles)), [] )
-    
-//     // layout
-//     const node_height = 16
-//     const node_width = 80
-//     const bundle_width = 16
-//     const level_y_padding = 16
-    
-//     var x_offset = 0
-//     var y_offset = 0
-//     levels.forEach(l => {
-//       x_offset += l.bundles.length*bundle_width
-//       y_offset += level_y_padding
-//       l.forEach((n, i) => {
-//         n.x = n.level*node_width + x_offset + node_height/2
-//         n.y = i*node_height + y_offset
-//       })
-//       y_offset += l.length*node_height
-//     })
-    
-//     var i = 0
-//     levels.forEach(l => {
-//       l.bundles.forEach(b => {
-//         b.x = b.parents[0].x + node_width + (l.bundles.length-1-b.i)*bundle_width
-//         b.y = i*node_height
-//       })
-//       i += l.length
-//     })
-      
-//     links.forEach(l => {
-//       l.xt = l.target.x
-//       l.yt = l.target.y
-//       l.xb = l.bundle.x
-//       l.yb = l.bundle.y
-//       l.xs = l.source.x
-//       l.ys = l.source.y
-//     })
-    
-//     var layout = {
-//       height: nodes.length * node_height + levels.length * level_y_padding,
-//       node_height,
-//       node_width,
-//       bundle_width
-//     }
-    
-//     return {levels, nodes, nodes_index, links, bundles, layout}
-//   }
+import * as d3 from 'd3';
 
-// color = d3.scaleOrdinal(d3.schemeDark2);
-
-export default function(root) {
+export default function (data) {
     d3.select("svg").remove();
+    const root = d3.hierarchy(data);
+    const dx = 15;
+    const dy = 159;
+    const margin = ({ top: 10, right: 120, bottom: 10, left: 40 });
+    const tree = d3.tree().nodeSize([dx, dy])
+    const diagonal = d3.linkHorizontal().x(d => d.y).y(d => d.x)
+    const width = 159 * 6;
 
-    var margin = {top: 20, right: 120, bottom: 20, left: 120},
-        width = 960 - margin.right - margin.left,
-        height = 500 - margin.top - margin.bottom;
-        
-    var i = 0,
-        duration = 750,
-        root;
-
-    var tree = d3.layout.tree()
-        .size([height, width]);
-
-    var diagonal = d3.svg.diagonal()
-        .projection(function(d) { return [d.y, d.x]; });
-
-    var svg = d3.select("body").append("svg")
-        .attr("width", width + margin.right + margin.left)
-        .attr("height", height + margin.top + margin.bottom)
-    .append("g")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-    root.x0 = height / 2;
+    root.x0 = dy / 2;
     root.y0 = 0;
+    root.descendants().forEach((d, i) => {
+        d.id = i;
+        d._children = d.children;
+        if (d.depth && d.data.name.length !== 7) d.children = null;
+    });
+
+    const svg = d3.select("body").append("svg")
+        .attr("viewBox", [-margin.left, -margin.top, width, dx])
+        .style("font", "10px sans-serif")
+        .style("user-select", "none");
+
+    const gLink = svg.append("g")
+        .attr("fill", "none")
+        .attr("stroke", "#555")
+        .attr("stroke-opacity", 0.4)
+        .attr("stroke-width", 1.5);
+
+    const gNode = svg.append("g")
+        .attr("cursor", "pointer")
+        .attr("pointer-events", "all");
+
+    function update(source) {
+        const duration = d3.event && d3.event.altKey ? 2500 : 250;
+        const nodes = root.descendants().reverse();
+        const links = root.links();
+
+        // Compute the new tree layout.
+        tree(root);
+
+        let left = root;
+        let right = root;
+        root.eachBefore(node => {
+            if (node.x < left.x) left = node;
+            if (node.x > right.x) right = node;
+        });
+
+        const height = right.x - left.x + margin.top + margin.bottom;
+
+        const transition = svg.transition()
+            .duration(duration)
+            .attr("viewBox", [-margin.left, left.x - margin.top, width, height])
+            .tween("resize", window.ResizeObserver ? null : () => () => svg.dispatch("toggle"));
+
+        // Update the nodes…
+        const node = gNode.selectAll("g")
+            .data(nodes, d => d.id);
+
+        // Enter any new nodes at the parent's previous position.
+        const nodeEnter = node.enter().append("g")
+            .attr("transform", d => `translate(${source.y0},${source.x0})`)
+            .attr("fill-opacity", 0)
+            .attr("stroke-opacity", 0)
+            .on("click", d => {
+                d.children = d.children ? null : d._children;
+                update(d);
+            });
+
+        nodeEnter.append("circle")
+            .attr("r", 2.5)
+            .attr("fill", d => d._children ? "#555" : "#999")
+            .attr("stroke-width", 10);
+
+        nodeEnter.append("text")
+            .attr("dy", "0.31em")
+            .attr("x", d => d._children ? -6 : 6)
+            .attr("text-anchor", d => d._children ? "end" : "start")
+            .text(d => d.data.name)
+            .clone(true).lower()
+            .attr("stroke-linejoin", "round")
+            .attr("stroke-width", 3)
+            .attr("stroke", "white");
+
+        // Transition nodes to their new position.
+        const nodeUpdate = node.merge(nodeEnter).transition(transition)
+            .attr("transform", d => `translate(${d.y},${d.x})`)
+            .attr("fill-opacity", 1)
+            .attr("stroke-opacity", 1);
+
+        // Transition exiting nodes to the parent's new position.
+        const nodeExit = node.exit().transition(transition).remove()
+            .attr("transform", d => `translate(${source.y},${source.x})`)
+            .attr("fill-opacity", 0)
+            .attr("stroke-opacity", 0);
+
+        // Update the links…
+        const link = gLink.selectAll("path")
+            .data(links, d => d.target.id)
+
+        // Enter any new links at the parent's previous position.
+        const linkEnter = link.enter().append("path")
+            .attr("d", d => {
+                const o = { x: source.x0, y: source.y0 };
+                return diagonal({ source: o, target: o });
+            });
+
+        // Transition links to their new position.
+        link.merge(linkEnter).transition(transition)
+            .attr("d", diagonal);
+
+        // Transition exiting nodes to the parent's new position.
+        link.exit().transition(transition).remove()
+            .attr("d", d => {
+                const o = { x: source.x, y: source.y };
+                return diagonal({ source: o, target: o });
+            });
+
+        // Stash the old positions for transition.
+        root.eachBefore(d => {
+            d.x0 = d.x;
+            d.y0 = d.y;
+        });
+
+        gLink.selectAll("path")
+            .filter(node => node.source.data.on_path && node.target.data.on_path)
+            .attr("stroke", "blue");
+    }
 
     update(root);
 
-    d3.select(self.frameElement).style("height", "500px");
-
-    function update(source) {
-
-    // Compute the new tree layout.
-    var nodes = tree.nodes(root).reverse(),
-        links = tree.links(nodes);
-
-    // Normalize for fixed-depth.
-    nodes.forEach(function(d) { d.y = d.depth * 180; });
-
-    // Update the nodes…
-    var node = svg.selectAll("g.node")
-        .data(nodes, function(d) { return d.id || (d.id = ++i); });
-
-    // Enter any new nodes at the parent's previous position.
-    var nodeEnter = node.enter().append("g")
-        .attr("class", "node")
-        .attr("transform", function(d) { return "translate(" + source.y0 + "," + source.x0 + ")"; })
-        .on("click", click);
-
-    nodeEnter.append("circle")
-        .attr("r", 1e-6)
-        .style("fill", function(d) { return d._children ? "lightsteelblue" : "#fff"; });
-
-    nodeEnter.append("text")
-        .attr("x", function(d) { return d.children || d._children ? -13 : 13; })
-        .attr("dy", ".35em")
-        .attr("text-anchor", function(d) { return d.children || d._children ? "end" : "start"; })
-        .text(function(d) { return d.name; })
-        .style("fill-opacity", 1e-6);
-
-    // Transition nodes to their new position.
-    var nodeUpdate = node.transition()
-        .duration(duration)
-        .attr("transform", function(d) { return "translate(" + d.y + "," + d.x + ")"; });
-
-    nodeUpdate.select("circle")
-        .attr("r", 10)
-        .style("fill", function(d) { return d._children ? "lightsteelblue" : "#fff"; });
-
-    nodeUpdate.select("text")
-        .style("fill-opacity", 1);
-
-    // Transition exiting nodes to the parent's new position.
-    var nodeExit = node.exit().transition()
-        .duration(duration)
-        .attr("transform", function(d) { return "translate(" + source.y + "," + source.x + ")"; })
-        .remove();
-
-    nodeExit.select("circle")
-        .attr("r", 1e-6);
-
-    nodeExit.select("text")
-        .style("fill-opacity", 1e-6);
-
-    // Update the links…
-    var link = svg.selectAll("path.link")
-        .data(links, function(d) { return d.target.id; });
-
-    // Enter any new links at the parent's previous position.
-    link.enter().insert("path", "g")
-        .attr("class", "link")
-        .attr("d", function(d) {
-            var o = {x: source.x0, y: source.y0};
-            return diagonal({source: o, target: o});
-        });
-
-    // Transition links to their new position.
-    link.transition()
-        .duration(duration)
-        .attr("d", diagonal);
-
-    // Transition exiting nodes to the parent's new position.
-    link.exit().transition()
-        .duration(duration)
-        .attr("d", function(d) {
-            var o = {x: source.x, y: source.y};
-            return diagonal({source: o, target: o});
-        })
-        .remove();
-
-    // Stash the old positions for transition.
-    nodes.forEach(function(d) {
-        d.x0 = d.x;
-        d.y0 = d.y;
-    });
-    }
-
-    // Toggle children on click.
-    function click(d) {
-    if (d.children) {
-        d._children = d.children;
-        d.children = null;
-    } else {
-        d.children = d._children;
-        d._children = null;
-    }
-    update(d);
-    }
+    return svg.node();
 }

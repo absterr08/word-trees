@@ -4,10 +4,10 @@ from flask import Flask, jsonify, render_template
 from .word_tree import WordTree
 from . import synonym_list
 from . import synonym_tree
+from . import synonym_path
 from . import root
 
 
-    # create and configure the app
 app = Flask(__name__, instance_relative_config=True)
 app.config.from_mapping(
     SECRET_KEY='dev',
@@ -27,11 +27,7 @@ try:
 except OSError:
     pass
 
-# a simple page that says hello
-@app.route('/hello')
-def hello():
-    return jsonify({"hello": "world"})
-
 app.register_blueprint(root.bp)
 app.register_blueprint(synonym_list.bp)
 app.register_blueprint(synonym_tree.bp)
+app.register_blueprint(synonym_path.bp)

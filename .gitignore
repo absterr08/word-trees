@@ -1,4 +1,5 @@
 __pycache__
 venv/
 node_modules/
+app/static/bundle.j
 

@@ -4,12 +4,17 @@
     "description": "words and their synonyms",
     "main": "index.js",
     "scripts": {
-        "webpack": "webpack --watch --mode=development ./frontend/index.js"
+        "webpack": "webpack --watch --mode=development ./frontend/index.js",
+        "heroku-prebuild": "npm install",
+        "heroku-postbuild": "webpack --config webpack.config.js"
     },
     "author": "",
     "license": "ISC",
     "devDependencies": {
         "webpack": "^4.20.2",
         "webpack-cli": "^3.1.2"
+    },
+    "dependencies": {
+        "d3": "^5.16.0"
     }
 }

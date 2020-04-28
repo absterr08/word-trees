@@ -6,6 +6,7 @@ class WordNode:
         self.word = word
         self.children = []
         self.parent = None
+        self.on_path = False
 
     def add_parent(self, parentNode):
         if (self not in parentNode.children):
@@ -22,9 +23,14 @@ class WordNode:
                 syns.add(WordNode(l.name()))
         return syns
 
+    def set_found(self):
+        self.on_path = True
+        self.parent and self.parent.set_found()
+
     def to_dict(self):
         return {
             'parent': self.parent.word if self.parent else '',
             'name': self.word,
+            'on_path': self.on_path,
             'children': [child.to_dict() for child in self.children]
         }

@@ -18,6 +18,12 @@ export const getSynonymList = (word) => {
     return get(`synonym_list?word=${word}`);
 };
 
-export const getSynonymTree = (word) => {
+export const getSynonymTree = ({ word }) => {
     return get(`synonym_tree?word=${word}`);
 };
+
+export const getSynonymPath = ({ source, target }) => {
+    return get(`synonym_path?source=${source}&target=${target}`);
+};
+
+window.testPath = getSynonymPath;
