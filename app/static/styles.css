@@ -50,7 +50,7 @@ h1 {
 h3 {
  font-size: 16px;
  text-align: center;
- margin-bottom: 10px;
+ margin-bottom: 20px;
 }
 
 a {
@@ -165,7 +165,7 @@ label {
 }
 
 #container {
-  margin: 40px;
+  margin: 30px;
   color: #808ca6;
 }
 
