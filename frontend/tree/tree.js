@@ -1,7 +1,8 @@
 import * as d3 from 'd3';
 
+export const removeTree = () => { d3.select("svg") && d3.select("svg").remove(); }
+
 export default function (data) {
-    d3.select("svg").remove();
     const root = d3.hierarchy(data);
     const dx = 15;
     const dy = 159;

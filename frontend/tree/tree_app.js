@@ -1,5 +1,5 @@
 import { getSynonymPath, getSynonymTree } from '../api_util.js';
-import drawTree from './tree.js';
+import drawTree, { removeTree } from './tree.js';
 
 
 export default function() {
@@ -7,28 +7,37 @@ export default function() {
     const getSynsButton = document.getElementById('synonyms');
     const sourceInput = document.getElementById('source-input');
     const targetInput = document.getElementById('target-input');
+    const loader = document.getElementById('loader');
+    const err = document.getElementById('err-msg');
     sourceInput.placeholder = 'fun';
     targetInput.placeholder = 'gaiety';
 
     sourceInput.onkeyup = () => getSynsButton.disabled = sourceInput.value ? false : true;
     targetInput.onkeyup = () => getPathButton.disabled = sourceInput.value && targetInput.value ? false : true
 
-    getPathButton.onclick = () => {
+    function search(searchFn, args) {
+        removeTree();
+        err.style.display = 'none';
+        loader.style.display = 'block';
+        let initPathStatus = getPathButton.disabled;
+        let initTreeStatus = getSynsButton.disabled;
         getPathButton.disabled = true;
-        getSynonymPath(sourceInput.value, targetInput.value)
-        .then(res => {
-            drawTree(res);
-            getPathButton.disabled = false;
-        });
-    };
-    getSynsButton.onclick = () => {
         getSynsButton.disabled = true;
-        getSynonymTree(sourceInput.value)
-        .then(res => {
-            drawTree(res);
-            getSynsButton.disabled = false;
-        });
-    };
+        searchFn(...args)
+            .then(res => {
+                drawTree(res);
+                getPathButton.disabled = initPathStatus;
+                getSynsButton.disabled = initTreeStatus;
+                loader.style.display = 'none';
+            })
+            .catch(() => {
+                err.style.display = 'flex';
+                loader.style.display = 'none';
+            })
+    }
+
+    getPathButton.onclick = () => { search(getSynonymPath, [sourceInput.value, targetInput.value]); };
+    getSynsButton.onclick = () => { search(getSynonymTree, [sourceInput.value]); };
 
     // bind modal
     const infoModal = document.getElementById('info-modal');
@@ -42,14 +51,9 @@ export default function() {
     exButton.onclick = () => {
         sourceInput.value = 'fun';
         targetInput.value = 'gaiety';
-        getPathButton.disabled = true;
-        getSynsButton.disabled = true;
+        getPathButton.disabled = false;
+        getSynsButton.disabled = false;
         infoModal.style.display = 'none';
-        getSynonymPath(sourceInput.value, targetInput.value)
-            .then(res => {
-                drawTree(res);
-                getPathButton.disabled = false;
-                getSynsButton.disabled = false;
-            });
+        search(getSynonymPath, [sourceInput.value, targetInput.value]);
     }
 }

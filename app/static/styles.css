@@ -181,7 +181,7 @@ footer {
 	flex-direction: column;
 	align-items: center;
   justify-content: center;
-  /* 5d172c */
+  /* color: #5d172c; */
   color: white;
   position: absolute;
   bottom: 0px;
@@ -221,4 +221,10 @@ circle {
   r: 3;
   stroke: black;
   stroke-width: 1.5;
+}
+
+#err-msg {
+  display: none;
+  justify-content: center;
+  color: #80a69a;
 }
