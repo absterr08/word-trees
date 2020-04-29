@@ -77,18 +77,18 @@
                 <br><br>
                 You can start just by entering a root word to view its tree of synonyms.
                 If you enter both a root and a target word, you can see if there's a path from the root to the target through
-                the root's synonyms.
+                the root word's synonyms.
+                <br>
+                <br>
                 Take "fun" and "gaiety" for example. A path from "fun" to "gaiety" exists because "merriment" is a synonym of "fun", and "gaiety" is a synonym of "merriment".
                 <br>
                 <br>
-                The tree is built out by finding all of the synonyms of a word, and all of the synonyms of those synonyms.
-                If a target word is entered, the tree is searched to see if it exists.
-                <br>
-                <br>
-                This project uses Python's <a target="_blank" href="https://www.nltk.org/">NLTK (Natural Language Toolkit)</a> library for
-                <a target="_blank" href="https://wordnet.princeton.edu/">Wordnet</a>.
-                Wordnet is a large, lexical database of English words that groups nouns, verbs, adjectives, and adverbs into
-                sets of synonyms called "synsets". On the frontend, <a target="_blank" href="https://d3js.org/">d3</a> is used to render the tree.
+                The synonym data from this project comes from <a target="_blank" href="https://wordnet.princeton.edu/">Wordnet</a>, a large lexical database of English words that
+                groups nouns, verbs, adjectives, and adverbs into sets of synonyms.
+                <a target="_blank" href="https://www.nltk.org/api/nltk.corpus.reader.html#module-nltk.corpus.reader.wordnet">This corpus for Wordnet</a>
+                is used to harness the data. It's provided by <a target="_blank" href="https://www.nltk.org/">NLTK (Natural Language Toolkit)</a>,
+                a really cool, extensive Python toolkit for working with language data.
+                On the frontend, <a target="_blank" href="https://d3js.org/">d3</a> is used to render the tree.
                 <br>
                 <br>
                 You can check out the code <a target="_blank" href="https://github.com/absterr08/word-trees">here</a>.

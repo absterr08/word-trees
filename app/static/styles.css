@@ -222,10 +222,20 @@ circle {
   stroke-width: 10;
 }
 
-.with-children {
+g.with-children {
+  cursor: pointer;
+}
+
+g.with-children > circle {
   r: 3px;
   stroke: black;
   stroke-width: 1.5;
+}
+
+.text-background {
+  stroke-linejoin: round;
+  stroke-width: 3;
+  stroke: white;
 }
 
 #err-msg {

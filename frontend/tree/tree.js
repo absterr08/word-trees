@@ -1,4 +1,5 @@
 import * as d3 from 'd3';
+import { formatWord } from '../api_util.js';
 
 export const removeTree = () => { d3.select("svg") && d3.select("svg").remove(); }
 
@@ -29,7 +30,6 @@ export default function (data) {
         .attr("class", "path")
 
     const gNode = svg.append("g")
-        .attr("cursor", "pointer")
         .attr("pointer-events", "all");
 
     function update(source) {
@@ -60,6 +60,7 @@ export default function (data) {
 
         // Enter any new nodes at the parent's previous position.
         const nodeEnter = node.enter().append("g")
+            .attr("class", d => d._children ? "with-children" : "")
             .attr("transform", d => `translate(${source.y0},${source.x0})`)
             .attr("fill-opacity", 0)
             .attr("stroke-opacity", 0)
@@ -69,17 +70,14 @@ export default function (data) {
             });
 
         nodeEnter.append("circle")
-            .attr("class", d => d._children ? "with-children": "")
 
         nodeEnter.append("text")
             .attr("dy", "0.31em")
             .attr("x", d => d._children ? -6 : 6)
             .attr("text-anchor", d => d._children ? "end" : "start")
-            .text(d => d.data.name)
+            .text(d => formatWord(d.data.name))
             .clone(true).lower()
-            .attr("stroke-linejoin", "round")
-            .attr("stroke-width", 3)
-            .attr("stroke", "white");
+            .attr("class", "text-background")
 
         // Transition nodes to their new position.
         const nodeUpdate = node.merge(nodeEnter).transition(transition)

@@ -14,16 +14,19 @@ function get(url) {
     });
 }
 
+export const formatReqWord = w => w.trim().replace(/ /g, '_');
+export const formatWord = w => w.replace(/_/g, ' ');
+
 export const getSynonymList = (word) => {
-    return get(`synonym_list?word=${word}`);
+    return get(`synonym_list?word=${formatReqWord(word)}`);
 };
 
 export const getSynonymTree = (word) => {
-    return get(`synonym_tree?word=${word}`);
+    return get(`synonym_tree?word=${formatReqWord(word)}`);
 };
 
 export const getSynonymPath = (source, target) => {
-    return get(`synonym_path?source=${source}&target=${target}`);
+    return get(`synonym_path?source=${formatReqWord(source)}&target=${formatReqWord(target)}`);
 };
 
 window.testPath = getSynonymPath;
