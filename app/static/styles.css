@@ -70,8 +70,15 @@ p {
 button {
   border-radius: 3px;
   margin: 10px;
-  padding: 4px 8px;
+  padding: 5px 8px;
   outline: none;
+  border: none;
+}
+
+button:disabled {
+  border: 1px solid rgb(186, 186, 186);
+  padding: 4px 8px;
+
 }
 
 button:not([disabled]) {
@@ -150,7 +157,6 @@ label {
 #info-container a {
   /* color: #5d172c; */
   color: #808ca6;
-  /* color: #80a69a; */
   text-decoration: underline;
 }
 
@@ -181,7 +187,6 @@ footer {
 	flex-direction: column;
 	align-items: center;
   justify-content: center;
-  /* color: #5d172c; */
   color: white;
   position: absolute;
   bottom: 0px;
@@ -212,13 +217,13 @@ footer .fab:hover, footer .far:hover, footer .fas:hover {
 }
 
 circle {
-  r: 2.5;
+  r: 2.5px;
   fill: rgb(153, 153, 153);
   stroke-width: 10;
 }
 
 .with-children {
-  r: 3;
+  r: 3px;
   stroke: black;
   stroke-width: 1.5;
 }
