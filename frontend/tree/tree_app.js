@@ -1,16 +1,8 @@
 import { getSynonymPath, getSynonymTree } from '../api_util.js';
 import drawTree from './tree.js';
 
-function setupModal() {
-    const infoModal = document.getElementById('info-modal');
-    const info = document.getElementById('info-container');
-    document.getElementById('question-button').onclick = () => infoModal.style.display = infoModal.style.display === 'flex' ? 'none' : 'flex';
-    infoModal.onclick = () => infoModal.style.display = 'none';
-    info.onclick = e => e.stopPropagation();
-}
 
 export default function() {
-    setupModal();
     const getPathButton = document.getElementById('path');
     const getSynsButton = document.getElementById('synonyms');
     const sourceInput = document.getElementById('source-input');
@@ -37,4 +29,27 @@ export default function() {
             getSynsButton.disabled = false;
         });
     };
+
+    // bind modal
+    const infoModal = document.getElementById('info-modal');
+    const info = document.getElementById('info-container');
+    document.getElementById('question-button').onclick = () => infoModal.style.display = infoModal.style.display === 'flex' ? 'none' : 'flex';
+    infoModal.onclick = () => infoModal.style.display = 'none';
+    info.onclick = e => e.stopPropagation();
+
+    // bind example button
+    const exButton = document.getElementById('example');
+    exButton.onclick = () => {
+        sourceInput.value = 'fun';
+        targetInput.value = 'gaiety';
+        getPathButton.disabled = true;
+        getSynsButton.disabled = true;
+        infoModal.style.display = 'none';
+        getSynonymPath(sourceInput.value, targetInput.value)
+            .then(res => {
+                drawTree(res);
+                getPathButton.disabled = false;
+                getSynsButton.disabled = false;
+            });
+    }
 }
